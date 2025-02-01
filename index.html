@@ -29,29 +29,16 @@
             <p style="font-family:verdana; color:white" id="demo"></p>
             <p style="font-family:verdana; color:white" id="realanswer"></p>
             <script>
-                const images = [
-                    "treasure.webp",
-                    "housing.webp",
-                    "stables.webp",
-                    "bridge.webp",
-                ]
+                const images = ["treasure.webp", "housing.webp", "stables.webp", "bridge.webp"];
                 const randomIndex = Math.floor(Math.random() * 4);
-                document.getElementById("bastion").src = images[randomIndex];
                 let answer;
-                switch (randomIndex) 
-                {
-                    case 0:
-                        answer = "treasure";
-                    case 1:
-                        answer = "housing";
-                    case 2:
-                        answer = "stables";
-                    case 3:
-                        answer = "bridge";
-                    default:
-                        break;
-                }
+                document.getElementById("bastion").src = images[randomIndex];
+                if (randomIndex == 0) {answer = "treasure";}
+                else if (randomIndex == 1) {answer = "housing";}
+                else if (randomIndex == 2) {answer = "stables";}
+                else if (randomIndex == 3) {answer = "bridge";}
                 let guesses = 0;
+
                 function checkAnswer(button, id)
                 {
                     if (id == answer)
