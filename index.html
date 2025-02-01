@@ -15,41 +15,23 @@
             <p style="font-family:verdana; color:white">holy shit its wordle but for bastions</p>
             <img src="bastion.webp" width="600" height="680" title="trevor">
             <br>
-            <button type="button" id="treasure" onclick="checkAnswer(treasure)"> Treasure </button>
-            <button type="button" id="housing" onclick="checkAnswer(housing)"> Housing </button>
-            <button type="button" id="stables" onclick="checkAnswer(stables)"> Stables </button>
-            <button type="button" id="bridge" onclick="checkAnswer(bridge)"> Bridge </button>
+            <button type="button" id="treasure" onclick="checkAnswer(this, treasure)"> Treasure </button>
+            <button type="button" id="housing" onclick="checkAnswer(this, housing)"> Housing </button>
+            <button type="button" id="stables" onclick="checkAnswer(this, stables)"> Stables </button>
+            <button type="button" id="bridge" onclick="checkAnswer(this, bridge)"> Bridge </button>
             <p style="font-family:verdana; color:white" id="demo"></p>
             <script>
                 let answer = treasure;
-                function checkAnswer(id)
+                function checkAnswer(button, id)
                 {
                     if (id == answer)
                     {
                         document.getElementById("demo").innerHTML = "CORRECT";
                     }
-                    else if (id == "treasure")
+                    else
                     {
-                        const element = document.getElementById("treasure");
-                        element.remove();
-                    }
-                    else if (id == "housing")
-                    {
-                        const element = document.getElementById("housing");
-                        document.getElementById("demo").innerHTML = element.id;
-                        element.remove();
-                    }
-                    else if (id == "stables")
-                    {
-                        const element = document.getElementById("stables");
-                        document.getElementById("demo").innerHTML = element.id;
-                        element.remove();
-                    }
-                    else if (id == "bridge")
-                    {
-                        const element = document.getElementById("bridge");
-                        document.getElementById("demo").innerHTML = element.id;
-                        element.remove();
+                        document.getElementById("demo").innerHTML = "WRONG";
+                        button.style.display = 'none';
                     }
                 }
             </script>
