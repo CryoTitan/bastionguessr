@@ -21,7 +21,7 @@
             <button type="button" id=bridge onclick="checkAnswer(bridge)"> Bridge </button>
             <p style="font-family:verdana; color:white" id="demo"></p>
             <script>
-                let answer = treasure
+                let answer = treasure;
                 function checkAnswer(id)
                 {
                     if (id == answer)
@@ -30,9 +30,10 @@
                     }
                     else
                     {
-                        document.getElementById("demo").innerHTML = "WRONG";
-                        const element = document.getElementById(id.toString());
-                        element.remove();
+                        document.getElementById("demo").innerHTML = id.toString();
+                        
+                        // const element = document.getElementById(id.toString()); // why the fuck does this not work
+                        // element.remove();
                     }
                 }
             </script>
