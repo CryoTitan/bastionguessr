@@ -15,10 +15,10 @@
             <p style="font-family:verdana; color:white">holy shit its wordle but for bastions</p>
             <img src="bastion.webp" width="600" height="680" title="trevor">
             <br>
-            <button type="button" id="treasure" onclick="checkAnswer(treasure)"> Treasure </button>
-            <button type="button" id="housing" onclick="checkAnswer(housing)"> Housing </button>
-            <button type="button" id="stables" onclick="checkAnswer(stables)"> Stables </button>
-            <button type="button" id="bridge" onclick="checkAnswer(bridge)"> Bridge </button>
+            <button type="button" id=treasure onclick="checkAnswer(treasure)"> Treasure </button>
+            <button type="button" id=housing onclick="checkAnswer(housing)"> Housing </button>
+            <button type="button" id=stables onclick="checkAnswer(stables)"> Stables </button>
+            <button type="button" id=bridge onclick="checkAnswer(bridge)"> Bridge </button>
             <p style="font-family:verdana; color:white" id="demo"></p>
             <script>
                 let answer = treasure
@@ -31,7 +31,8 @@
                     else
                     {
                         document.getElementById("demo").innerHTML = "WRONG";
-                        document.getElementById(id).remove();
+                        const element = document.getElementById(id);
+                        element.remove();
                     }
                 }
             </script>
