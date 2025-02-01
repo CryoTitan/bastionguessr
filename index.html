@@ -44,7 +44,9 @@
                         guesses = guesses + 1;
                         if (guesses >= 3)
                         {
-                            document.getElementById("realanswer").innerHTML = "answer was " + answer;
+                            document.getElementById("realanswer").innerHTML = "answer was " + String(answer);
+                            document.getElementById(answer).style.display = 'none';
+                            document.getElementById("demo").style.display = 'none';
                         }
                     }
                 }
