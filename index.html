@@ -8,6 +8,13 @@
                 {
                   background-image: url('background.png');
                 }
+
+                button 
+                {
+                margin: 10px;
+                padding: 10px 20px;
+                font-size: 16px;
+                }
             </style>
         </head>
         <body>
@@ -15,13 +22,15 @@
             <p style="font-family:verdana; color:white">holy shit its wordle but for bastions</p>
             <img src="bastion.webp" width="600" height="680" title="trevor">
             <br>
-            <button type="button" id="treasure" onclick="checkAnswer(this, treasure)"> Treasure </button>
-            <button type="button" id="housing" onclick="checkAnswer(this, housing)"> Housing </button>
-            <button type="button" id="stables" onclick="checkAnswer(this, stables)"> Stables </button>
-            <button type="button" id="bridge" onclick="checkAnswer(this, bridge)"> Bridge </button>
+            <button onclick="checkAnswer(this, treasure)"> Treasure </button>
+            <button onclick="checkAnswer(this, housing)"> Housing </button>
+            <button onclick="checkAnswer(this, stables)"> Stables </button>
+            <button onclick="checkAnswer(this, bridge)"> Bridge </button>
             <p style="font-family:verdana; color:white" id="demo"></p>
+            <p style="font-family:verdana; color:white" id="realanswer"></p>
             <script>
                 let answer = treasure;
+                let guesses = 0;
                 function checkAnswer(button, id)
                 {
                     if (id == answer)
@@ -32,6 +41,11 @@
                     {
                         document.getElementById("demo").innerHTML = "WRONG";
                         button.style.display = 'none';
+                        guesses = guesses + 1;
+                        if (guesses >= 3)
+                        {
+                            document.getElementById("realanswer").innerHTML = "answer was " + answer;
+                        }
                     }
                 }
             </script>
