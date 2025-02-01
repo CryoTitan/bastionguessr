@@ -20,7 +20,7 @@
         <body>
             <h1 style="font-family:verdana; font-size:300%; text-align:center; color:white">Bastiondle</h1>
             <p style="font-family:verdana; color:white">holy shit its wordle but for bastions</p>
-            <img src="bastion.webp" width="600" height="680" title="trevor">
+            <img id="bastion">
             <br>
             <button id="treasure" onclick="checkAnswer(this, 'treasure')"> Treasure </button>
             <button id="housing" onclick="checkAnswer(this, 'housing')"> Housing </button>
@@ -29,7 +29,28 @@
             <p style="font-family:verdana; color:white" id="demo"></p>
             <p style="font-family:verdana; color:white" id="realanswer"></p>
             <script>
-                let answer = 'treasure';
+                const images = [
+                    "treasure.webp",
+                    "housing.webp",
+                    "stables.webp",
+                    "bridge.webp",
+                ]
+                const randomIndex = Math.floor(Math.random() * 4);
+                document.getElementById("bastion").src = images[randomIndex];
+                let answer;
+                switch (randominDex) 
+                {
+                    case 1:
+                        answer = "treasure";
+                    case 2:
+                        answer = "housing";
+                    case 3:
+                        answer = "stables";
+                    case 4:
+                        answer = "bridge";
+                    default:
+                        break;
+                }
                 let guesses = 0;
                 function checkAnswer(button, id)
                 {
