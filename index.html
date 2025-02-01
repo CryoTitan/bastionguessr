@@ -31,7 +31,8 @@
                     else
                     {
                         document.getElementById("demo").innerHTML = "WRONG";
-                        document.getElementById(id.toString()).remove();
+                        const element = document.getElementById(id.toString());
+                        element.remove();
                     }
                 }
             </script>
