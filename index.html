@@ -28,12 +28,21 @@
                     {
                         document.getElementById("demo").innerHTML = "CORRECT";
                     }
-                    else
+                    else if (id == treasure)
                     {
-                        document.getElementById("demo").innerHTML = String(id);
-                        
-                        // const element = document.getElementById(id.toString()); // why the fuck does this not work
-                        // element.remove();
+                        document.getElementById("treasure").remove();
+                    }
+                    else if (id == housing)
+                    {
+                        document.getElementById("housing").remove();
+                    }
+                    else if (id == stables)
+                    {
+                        document.getElementById("stables").remove();
+                    }
+                    else if (id == bridge)
+                    {
+                        document.getElementById("bridge").remove();
                     }
                 }
             </script>
