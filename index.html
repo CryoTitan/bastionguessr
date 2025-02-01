@@ -17,21 +17,26 @@
                 img 
                 {
                     max-width: 75%;
-                    height: auto;
+                    height: 70vh;
+                    display: block;
+                    margin-left: auto;
+                    margin-right: auto;
                 }
             </style>
         </head>
         <body>
             <h1 style="font-family:verdana; font-size:300%; text-align:center; color:white">Bastiondle</h1>
             <p style="font-family:verdana; color:white">holy shit its wordle but for bastions</p>
-            <img id="bastion">
+            <img id="bastion" class="center">
             <br>
-            <button id="treasure" onclick="checkAnswer(this, 'treasure')"> Treasure </button>
-            <button id="housing" onclick="checkAnswer(this, 'housing')"> Housing </button>
-            <button id="stables" onclick="checkAnswer(this, 'stables')"> Stables </button>
-            <button id="bridge" onclick="checkAnswer(this, 'bridge')"> Bridge </button>
-            <p style="font-family:verdana; color:white" id="demo"></p>
-            <p style="font-family:verdana; color:white" id="realanswer"></p>
+            <div style="margin:auto; text-align:center;">
+                <button id="treasure" onclick="checkAnswer(this, 'treasure')"> Treasure </button>
+                <button id="housing" onclick="checkAnswer(this, 'housing')"> Housing </button>
+                <button id="stables" onclick="checkAnswer(this, 'stables')"> Stables </button>
+                <button id="bridge" onclick="checkAnswer(this, 'bridge')"> Bridge </button>
+            </div>
+            <p style="font-family:verdana; color:white; text-align:center;" id="demo"></p>
+            <p style="font-family:verdana; color:white; text-align:center;" id="realanswer"></p>
             <script>
                 const images = ["treasure.webp", "housing.webp", "stables.webp", "bridge.webp"];
                 const randomIndex = Math.floor(Math.random() * 4);
