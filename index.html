@@ -14,7 +14,24 @@
             <h1 style="font-family:verdana; font-size:300%; text-align:center; color:white">Bastiondle</h1>
             <p style="font-family:verdana; color:white">holy shit its wordle but for bastions</p>
             <img src="bastion.webp" width="600" height="680" title="trevor">
-            <button type="button" onclick="document.getElementById('demo').innerHTML = Date()">
-            Click me to display Date and Time.</button>
+            <button type="button" id="treasure" onclick="checkAnswer()"> Treasure </button>
+            <button type="button" id="housing" onclick="checkAnswer()"> Housing </button>
+            <button type="button" id="stables" onclick="checkAnswer()"> Stables </button>
+            <button type="button" id="bridge" onclick="checkAnswer()"> Bridge </button>
+            <p style="font-family:verdana; color:white" id="demo"></p>
+            <script>
+                let answer = "stables"
+                function checkAnswer(id)
+                {
+                    if (id == answer)
+                    {
+                        document.getElementById("demo").innerHTML = "CORRECT";
+                    }
+                    else
+                    {
+                        document.getElementById("demo").innerHTML = "EXTREMELY LOUD INCORRECT BUZZER";
+                    }
+                }
+            </script>
         </body>
     </html>
