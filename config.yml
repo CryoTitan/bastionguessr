@@ -1,3 +1,4 @@
-theme: jekyll-theme-minimal
+name: my site
+theme: minima
 title: homepage
 description: aaaaaaaaaaaaaa
