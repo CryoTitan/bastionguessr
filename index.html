@@ -60,11 +60,13 @@
                 {
                     if (id == answer)
                     {
-                        document.getElementById("demo").innerHTML = "CORRECT";
+                        document.getElementById("demo").innerHTML = "CORRECT!!!";
+                        document.getElementById("demo").style.color = 'lawngreen';
                     }
                     else
                     {
-                        document.getElementById("demo").innerHTML = "WRONG";
+                        document.getElementById("demo").innerHTML = "EXTREMELY LOUD INCORRECT BUZZER";
+                        document.getElementById("demo").style.color = 'firebrick';
                         button.style.display = "none";
                         guesses = guesses + 1;
                         if (guesses >= 3)
