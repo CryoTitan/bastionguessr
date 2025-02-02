@@ -4,27 +4,19 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Bastiondle</title>
             <style>
-                h1
-                {
-                    line-height: 0.1;
-                }
-                p
-                {
-                    line-height: 1;
-                }
-                body 
-                {
-                    background-image: url('background1.png');
-                }
+                h1 {line-height: 0.1;}
+                p {line-height: 1;}
+                body {background-image: url('background1.png');}
                 button 
                 {
                     margin: 10px;
                     padding: 10px 20px;
-                    font-size: 16px;
+                    font-size: 20px;
+                    border-radius: 6px;
                 }
                 img 
                 {
-                    max-width: 64%;
+                    max-width: 75%;
                     height: auto;
                     display: block;
                     margin-left: auto;
@@ -45,19 +37,31 @@
             </div>
             <p style="font-family:verdana; color:white; text-align:center;" id="demo"></p>
             <p style="font-family:verdana; color:white; text-align:center;" id="realanswer"></p>
+            <div style="margin:auto; text-align:center;">
+                <button id="reset" onclick="reset()"> Reset </button>
+            </div>
             <script>
-                const bastionType = Math.floor(Math.random() * 4);
-                const difficulty = Math.floor(Math.random() * 3);
-                const image = Math.floor(Math.random() * 5);
                 const bastions = ["Treasure", "Housing", "Stables", "Bridge"];
                 const difficulties = ["Easy", "Medium", "Hard"];
                 const images = ["1.png", "2.png", "3.png", "4.png", "5.png"];
-                let answer = bastions[bastionType];
-                let path = "screenshots/" + bastions[bastionType] + difficulties[difficulty] + "/" + images[image];
+                let answer;
                 let guesses = 0;
-                document.getElementById("bastion").src = path;
-                document.getElementById("difficulty").innerHTML = "Difficulty: " + difficulties[difficulty];
+                document.getElementById("reset").style.display = 'none';
+                updateImage();
 
+                function updateImage()
+                {
+                    const bastionType = Math.floor(Math.random() * 4);
+                    const difficulty = Math.floor(Math.random() * 3);
+                    const image = Math.floor(Math.random() * 5);
+
+                    let path = "screenshots/" + bastions[bastionType] + difficulties[difficulty] + "/" + images[image];
+
+                    answer = bastions[bastionType];
+                    document.getElementById("bastion").src = path;
+                    document.getElementById("difficulty").innerHTML = "Difficulty: " + difficulties[difficulty];
+                }
+                
                 function checkAnswer(button, id)
                 {
                     if (id == answer)
@@ -71,6 +75,7 @@
                                 document.getElementById(bastions[rep]).disabled = true;
                             }
                         }
+                        document.getElementById("reset").style.display = 'inline';
                     }
                     else
                     {
@@ -80,10 +85,25 @@
                         guesses = guesses + 1;
                         if (guesses >= 3)
                         {
+                            document.getElementById("realanswer").style.display = 'block';
                             document.getElementById("realanswer").innerHTML = "Answer was: " + answer;
-                            document.getElementById("demo").style.display = 'none';
+                            document.getElementById("demo").innerHTML = "";
+                            document.getElementById("reset").style.display = 'inline';
                         }
                     }
+                }
+
+                function reset()
+                {
+                    updateImage();
+                    for (let rep = 0; rep < bastions.length; rep = rep + 1)
+                    {
+                        document.getElementById(bastions[rep]).disabled = false;
+                    }
+                    document.getElementById("reset").style.display = 'none';
+                    document.getElementById("realanswer").style.display = 'none'
+                    document.getElementById("demo").innerHTML = "";
+                    guesses = 0;
                 }
             </script>
         </body>
