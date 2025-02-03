@@ -5,13 +5,24 @@
             <title>Bastiondle</title>
             <style>
                 h1 {line-height: 0.1;}
-                p {line-height: 1;}
+                p 
+                {
+                    line-height: 1;
+                    font-family:verdana; 
+                    color:white;
+                }
                 body {background-image: url('background1.png');}
                 button 
                 {
                     margin: 10px;
                     padding: 10px 20px;
                     font-size: 20px;
+                    border-radius: 6px;
+                }
+                select 
+                {
+                    padding: 5px 5px;
+                    font-size: 16px;
                     border-radius: 6px;
                 }
                 img 
@@ -25,49 +36,82 @@
             </style>
         </head>
         <body>
-            <h1 style="font-family:verdana; font-size:300%; text-align:center; color:white">Bastiondle</h1>
-            <p style="font-family:verdana; text-align:center; color:white">its wordle but for bastions</p>
+            <center>
+            <h1 style="font-family:verdana; font-size:300%;  color:white">Bastiondle</h1>
+            <p>its wordle but for bastions</p>
+            <br>
+            <p>Difficulty:
+            <select id="dropdown" onchange="updateImage()">
+                <option value="Any">Any</option>
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+            </select>
+            </p>
             <img id="bastion" class="center">
-            <p style="font-family:verdana; color:white; text-align:center;" id="difficulty"></p>
-            <div style="margin:auto; text-align:center;">
-                <button id="Treasure" onclick="checkAnswer(this, 'Treasure')"> Treasure </button>
-                <button id="Housing" onclick="checkAnswer(this, 'Housing')"> Housing </button>
-                <button id="Stables" onclick="checkAnswer(this, 'Stables')"> Stables </button>
-                <button id="Bridge" onclick="checkAnswer(this, 'Bridge')"> Bridge </button>
-            </div>
-            <p style="font-family:verdana; color:white; text-align:center;" id="demo"></p>
-            <p style="font-family:verdana; color:white; text-align:center;" id="realanswer"></p>
-            <div style="margin:auto; text-align:center;">
-                <button id="reset" onclick="reset()"> Reset </button>
-            </div>
+            <p id="difficulty"></p>
+
+            <button id="Treasure" onclick="checkAnswer(this, 'Treasure')"> Treasure </button>
+            <button id="Housing" onclick="checkAnswer(this, 'Housing')"> Housing </button>
+            <button id="Stables" onclick="checkAnswer(this, 'Stables')"> Stables </button>
+            <button id="Bridge" onclick="checkAnswer(this, 'Bridge')"> Bridge </button>
+            <p id="output"></p>
+            <p id="realanswer"></p>
+            <button id="reset" onclick="reset()"> Reset </button>
+            <p id="streak"></p>
+            <br><br><br><br><br><br><br><br><br>
+            </center>
             <script>
                 const bastions = ["Treasure", "Housing", "Stables", "Bridge"];
                 const difficulties = ["Easy", "Medium", "Hard"];
-                const images = ["1.png", "2.png", "3.png", "4.png", "5.png"];
+                const images = ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png"];
                 let answer;
                 let guesses = 0;
+                let streak = 0;
                 document.getElementById("reset").style.display = 'none';
                 updateImage();
 
                 function updateImage()
                 {
-                    const bastionType = Math.floor(Math.random() * 4);
-                    const difficulty = Math.floor(Math.random() * 3);
-                    const image = Math.floor(Math.random() * 5);
+                    let bastionType = Math.floor(Math.random() * 4);
+                    let difficulty;
+                    if (document.getElementById("dropdown").value == 'Easy')
+                    {
+                        difficulty = 0;
+                    }
+                    else if (document.getElementById("dropdown").value == 'Medium')
+                    {
+                        difficulty = 1;
+                    }
+                    else if (document.getElementById("dropdown").value == 'Hard')
+                    {
+                        difficulty = 2;
+                    }
+                    else
+                    {
+                        difficulty = Math.floor(Math.random() * 3);
+                    }
+                    let image = Math.floor(Math.random() * 7);
 
                     let path = "screenshots/" + bastions[bastionType] + difficulties[difficulty] + "/" + images[image];
 
                     answer = bastions[bastionType];
                     document.getElementById("bastion").src = path;
                     document.getElementById("difficulty").innerHTML = "Difficulty: " + difficulties[difficulty];
+                    document.getElementById("streak").innerHTML = 'Streak: ' + streak;
                 }
                 
                 function checkAnswer(button, id)
                 {
                     if (id == answer)
                     {
-                        document.getElementById("demo").innerHTML = "CORRECT!!!";
-                        document.getElementById("demo").style.color = 'lawngreen';
+                        document.getElementById("output").innerHTML = "CORRECT!!!";
+                        document.getElementById("output").style.color = 'lawngreen';
+                        if (guesses == 0)
+                        {
+                            streak = streak + 1;
+                        }
+                        document.getElementById("streak").innerHTML = 'Streak: ' + streak;
                         for (let rep = 0; rep < bastions.length; rep = rep + 1)
                         {
                             if (!(bastions[rep] == answer))
@@ -79,15 +123,17 @@
                     }
                     else
                     {
-                        document.getElementById("demo").innerHTML = "EXTREMELY LOUD INCORRECT BUZZER";
-                        document.getElementById("demo").style.color = 'red';
+                        document.getElementById("output").innerHTML = "EXTREMELY LOUD INCORRECT BUZZER";
+                        document.getElementById("output").style.color = 'red';
+                        streak = 0;
+                        document.getElementById("streak").innerHTML = 'Streak: ' + streak;
                         button.disabled = true;
                         guesses = guesses + 1;
                         if (guesses >= 3)
                         {
                             document.getElementById("realanswer").style.display = 'block';
                             document.getElementById("realanswer").innerHTML = "Answer was: " + answer;
-                            document.getElementById("demo").innerHTML = "";
+                            document.getElementById("output").innerHTML = "";
                             document.getElementById("reset").style.display = 'inline';
                         }
                     }
@@ -102,7 +148,7 @@
                     }
                     document.getElementById("reset").style.display = 'none';
                     document.getElementById("realanswer").style.display = 'none'
-                    document.getElementById("demo").innerHTML = "";
+                    document.getElementById("output").innerHTML = "";
                     guesses = 0;
                 }
             </script>
