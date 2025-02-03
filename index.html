@@ -42,10 +42,10 @@
             <br>
             <p>Difficulty:
             <select id="dropdown" onchange="updateImage()">
-                <option value="Any">Any</option>
-                <option value="Easy">Easy</option>
-                <option value="Medium">Medium</option>
-                <option value="Hard">Hard</option>
+                <option value="-1">Any</option>
+                <option value="0">Easy</option>
+                <option value="1">Medium</option>
+                <option value="2">Hard</option>
             </select>
             </p>
             <img id="bastion" class="center">
@@ -75,17 +75,9 @@
                 {
                     let bastionType = Math.floor(Math.random() * 4);
                     let difficulty;
-                    if (document.getElementById("dropdown").value == 'Easy')
+                    if (!(document.getElementById("dropdown").value == -1))
                     {
-                        difficulty = 0;
-                    }
-                    else if (document.getElementById("dropdown").value == 'Medium')
-                    {
-                        difficulty = 1;
-                    }
-                    else if (document.getElementById("dropdown").value == 'Hard')
-                    {
-                        difficulty = 2;
+                        difficulty = document.getElementById("dropdown").value;
                     }
                     else
                     {
