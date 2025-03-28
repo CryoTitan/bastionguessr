@@ -2,7 +2,7 @@
     <html lang="en-US">
         <head>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Bastiondle</title>
+            <title>BastionGuessr</title>
             <style>
                 h1 {line-height: 0.1;}
                 p 
@@ -37,8 +37,8 @@
         </head>
         <body>
             <center>
-            <h1 style="font-family:verdana; font-size:300%;  color:white">Bastiondle</h1>
-            <p>its wordle but for bastions</p>
+            <h1 style="font-family:verdana; font-size:300%;  color:white">BastionGuessr</h1>
+            <p>its geoguessr but for bastions</p>
             <br>
             <p>Difficulty:
             <select id="dropdown" onchange="updateImage()">
@@ -66,6 +66,8 @@
                 const difficulties = ["Easy", "Medium", "Hard"];
                 const images = ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png"];
                 let answer;
+                let previous;
+                let path;
                 let guesses = 0;
                 let streak = 0;
                 document.getElementById("reset").style.display = 'none';
@@ -85,7 +87,7 @@
                     }
                     let image = Math.floor(Math.random() * 7);
 
-                    let path = "screenshots/" + bastions[bastionType] + difficulties[difficulty] + "/" + images[image];
+                    path = "screenshots/" + bastions[bastionType] + difficulties[difficulty] + "/" + images[image];
 
                     answer = bastions[bastionType];
                     document.getElementById("bastion").src = path;
@@ -133,7 +135,12 @@
 
                 function reset()
                 {
+                    previous = path;
                     updateImage();
+                    while (path == previous)
+                    {
+                        updateImage();
+                    }
                     for (let rep = 0; rep < bastions.length; rep = rep + 1)
                     {
                         document.getElementById(bastions[rep]).disabled = false;
