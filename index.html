@@ -27,12 +27,13 @@
                 }
                 img 
                 {
-                    max-width: 75%;
-                    height: auto;
-                    display: block;
-                    margin-left: auto;
-                    margin-right: auto;
+                    width: 1000px;
                 }
+                .image-container 
+                {
+                    width: 1000px;
+                    overflow: hidden;
+                }            
             </style>
         </head>
         <body>
@@ -40,15 +41,24 @@
             <h1 style="font-family:verdana; font-size:300%;  color:white">BastionGuessr</h1>
             <p>its geoguessr but for bastions</p>
             <br>
-            <p>Difficulty:
-            <select id="dropdown" onchange="updateImage()">
+            
+            <p>
+            Difficulty:
+            <select id="diffdrop" onchange="updateImage()">
                 <option value="-1">Any</option>
                 <option value="0">Easy</option>
                 <option value="1">Medium</option>
                 <option value="2">Hard</option>
             </select>
+            &nbsp; &nbsp; &nbsp; Mode:
+            <select id="modedrop" onchange="updateImage()">
+                <option value="0">Normal</option>
+                <option value="1">Zoom</option>
+            </select>
             </p>
+            <div class="image-container">
             <img id="bastion" class="center">
+        </div>
             <p id="difficulty"></p>
 
             <button id="Treasure" onclick="checkAnswer(this, 'Treasure')"> Treasure </button>
@@ -59,12 +69,11 @@
             <p id="realanswer"></p>
             <button id="reset" onclick="reset()"> Reset </button>
             <p id="streak"></p>
-            <br><br><br><br><br><br><br><br><br>
+
             </center>
             <script>
                 const bastions = ["Treasure", "Housing", "Stables", "Bridge"];
                 const difficulties = ["Easy", "Medium", "Hard"];
-                const images = ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png"];
                 let answer;
                 let previous;
                 let path;
@@ -77,22 +86,31 @@
                 {
                     let bastionType = Math.floor(Math.random() * 4);
                     let difficulty;
-                    if (!(document.getElementById("dropdown").value == -1))
+                    if (!(document.getElementById("diffdrop").value == -1))
                     {
-                        difficulty = document.getElementById("dropdown").value;
+                        difficulty = document.getElementById("diffdrop").value;
                     }
                     else
                     {
                         difficulty = Math.floor(Math.random() * 3);
                     }
-                    let image = Math.floor(Math.random() * 7);
+                    let image = Math.ceil(Math.random() * 10);
 
-                    path = "screenshots/" + bastions[bastionType] + difficulties[difficulty] + "/" + images[image];
+                    path = "screenshots/" + bastions[bastionType] + difficulties[difficulty] + "/" + image + ".png";
 
                     answer = bastions[bastionType];
                     document.getElementById("bastion").src = path;
                     document.getElementById("difficulty").innerHTML = "Difficulty: " + difficulties[difficulty];
                     document.getElementById("streak").innerHTML = 'Streak: ' + streak;
+
+                    if (document.getElementById("modedrop").value == 1)
+                    {
+                        zoom(3);
+                    }
+                    else
+                    {
+                        zoom(1);
+                    }
                 }
                 
                 function checkAnswer(button, id)
@@ -101,6 +119,7 @@
                     {
                         document.getElementById("output").innerHTML = "CORRECT!!!";
                         document.getElementById("output").style.color = 'lawngreen';
+                        zoom(1);
                         if (guesses == 0)
                         {
                             streak = streak + 1;
@@ -123,8 +142,20 @@
                         document.getElementById("streak").innerHTML = 'Streak: ' + streak;
                         button.disabled = true;
                         guesses = guesses + 1;
+                        if (document.getElementById("modedrop").value == 1)
+                        {
+                            if (guesses == 1)
+                            {
+                                zoom(2.5)
+                            }
+                            else if (guesses == 2)
+                            {
+                                zoom(1.5)
+                            }
+                        }
                         if (guesses >= 3)
                         {
+                            zoom(1);
                             document.getElementById("realanswer").style.display = 'block';
                             document.getElementById("realanswer").innerHTML = "Answer was: " + answer;
                             document.getElementById("output").innerHTML = "";
@@ -149,6 +180,12 @@
                     document.getElementById("realanswer").style.display = 'none'
                     document.getElementById("output").innerHTML = "";
                     guesses = 0;
+                }
+
+                function zoom(scale) 
+                {
+                    img = document.getElementById("bastion")
+                    img.style.transform = `scale(${scale})`;
                 }
             </script>
         </body>
