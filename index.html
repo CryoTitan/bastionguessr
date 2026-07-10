@@ -19,6 +19,12 @@
                     font-size: 20px;
                     border-radius: 6px;
                 }
+                button:disabled 
+                {
+                    background-color: #8B0000;
+                    color: #FFFFFF;
+                    cursor: not-allowed;
+                }         
                 select 
                 {
                     padding: 5px 5px;
@@ -33,42 +39,39 @@
                 {
                     width: 1000px;
                     overflow: hidden;
-                }            
+                }   
             </style>
         </head>
         <body>
             <center>
             <h1 style="font-family:verdana; font-size:300%;  color:white">BastionGuessr</h1>
-            <p>its geoguessr but for bastions</p>
+            <p>geoguessr but for bastions</p>
             <br>
             
             <p>
             Difficulty:
-            <select id="diffdrop" onchange="updateImage()">
+            <select id="diffdrop" onchange="reset()">
                 <option value="-1">Any</option>
                 <option value="0">Easy</option>
                 <option value="1">Medium</option>
                 <option value="2">Hard</option>
             </select>
             &nbsp; &nbsp; &nbsp; Mode:
-            <select id="modedrop" onchange="updateImage()">
+            <select id="modedrop" onchange="reset()">
                 <option value="0">Normal</option>
                 <option value="1">Zoom</option>
             </select>
             </p>
             <div class="image-container">
-            <img id="bastion" class="center">
+            <img id="bastion" onerror="reset()">
         </div>
-            <p id="difficulty"></p>
-
             <button id="Treasure" onclick="checkAnswer(this, 'Treasure')"> Treasure </button>
             <button id="Housing" onclick="checkAnswer(this, 'Housing')"> Housing </button>
             <button id="Stables" onclick="checkAnswer(this, 'Stables')"> Stables </button>
             <button id="Bridge" onclick="checkAnswer(this, 'Bridge')"> Bridge </button>
-            <p id="output"></p>
             <p id="realanswer"></p>
-            <button id="reset" onclick="reset()"> Reset </button>
             <p id="streak"></p>
+            <button id="reset" onclick="reset()"> Again </button>
 
             </center>
             <script>
@@ -94,13 +97,12 @@
                     {
                         difficulty = Math.floor(Math.random() * 3);
                     }
-                    let image = Math.ceil(Math.random() * 10);
+                    let image = Math.ceil(Math.random() * 15);
 
                     path = "screenshots/" + bastions[bastionType] + difficulties[difficulty] + "/" + image + ".png";
 
                     answer = bastions[bastionType];
                     document.getElementById("bastion").src = path;
-                    document.getElementById("difficulty").innerHTML = "Difficulty: " + difficulties[difficulty];
                     document.getElementById("streak").innerHTML = 'Streak: ' + streak;
 
                     if (document.getElementById("modedrop").value == 1)
@@ -117,8 +119,7 @@
                 {
                     if (id == answer)
                     {
-                        document.getElementById("output").innerHTML = "CORRECT!!!";
-                        document.getElementById("output").style.color = 'lawngreen';
+                        button.style.backgroundColor = 'green';
                         zoom(1);
                         if (guesses == 0)
                         {
@@ -127,17 +128,12 @@
                         document.getElementById("streak").innerHTML = 'Streak: ' + streak;
                         for (let rep = 0; rep < bastions.length; rep = rep + 1)
                         {
-                            if (!(bastions[rep] == answer))
-                            {
-                                document.getElementById(bastions[rep]).disabled = true;
-                            }
+                            document.getElementById(bastions[rep]).disabled = true;
                         }
                         document.getElementById("reset").style.display = 'inline';
                     }
                     else
                     {
-                        document.getElementById("output").innerHTML = "EXTREMELY LOUD INCORRECT BUZZER";
-                        document.getElementById("output").style.color = 'red';
                         streak = 0;
                         document.getElementById("streak").innerHTML = 'Streak: ' + streak;
                         button.disabled = true;
@@ -158,7 +154,6 @@
                             zoom(1);
                             document.getElementById("realanswer").style.display = 'block';
                             document.getElementById("realanswer").innerHTML = "Answer was: " + answer;
-                            document.getElementById("output").innerHTML = "";
                             document.getElementById("reset").style.display = 'inline';
                         }
                     }
@@ -175,16 +170,16 @@
                     for (let rep = 0; rep < bastions.length; rep = rep + 1)
                     {
                         document.getElementById(bastions[rep]).disabled = false;
+                        document.getElementById(bastions[rep]).style.backgroundColor = '';
                     }
                     document.getElementById("reset").style.display = 'none';
                     document.getElementById("realanswer").style.display = 'none'
-                    document.getElementById("output").innerHTML = "";
                     guesses = 0;
                 }
 
                 function zoom(scale) 
                 {
-                    img = document.getElementById("bastion")
+                    let img = document.getElementById("bastion")
                     img.style.transform = `scale(${scale})`;
                 }
             </script>
