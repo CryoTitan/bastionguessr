@@ -50,7 +50,7 @@
             
             <p>
             Difficulty:
-            <select id="diffdrop" onchange="reset()">
+            <select id="diffdrop" onchange="buildQueue(); reset()">
                 <option value="-1">Any</option>
                 <option value="0">Easy</option>
                 <option value="1">Medium</option>
@@ -63,7 +63,7 @@
             </select>
             </p>
             <div class="image-container">
-            <img id="bastion" onerror="reset()">
+            <img id="bastion">
         </div>
             <button id="Treasure" onclick="checkAnswer(this, 'Treasure')"> Treasure </button>
             <button id="Housing" onclick="checkAnswer(this, 'Housing')"> Housing </button>
@@ -75,41 +75,80 @@
 
             </center>
             <script>
+                const imageCounts = {
+                    TreasureEasy: 10,
+                    TreasureMedium: 13,
+                    TreasureHard: 9,
+                    HousingEasy: 10,
+                    HousingMedium: 9,
+                    HousingHard: 14,
+                    StablesEasy: 10,
+                    StablesMedium: 13,
+                    StablesHard: 12,
+                    BridgeEasy: 10,
+                    BridgeMedium: 9,
+                    BridgeHard: 15
+                };
+
                 const bastions = ["Treasure", "Housing", "Stables", "Bridge"];
                 const difficulties = ["Easy", "Medium", "Hard"];
+                let imageQueue = [];
                 let answer;
-                let previous;
                 let path;
                 let guesses = 0;
                 let streak = 0;
                 document.getElementById("reset").style.display = 'none';
+                buildQueue();
                 updateImage();
 
-                function updateImage()
+                function buildQueue() 
                 {
-                    let bastionType = Math.floor(Math.random() * 4);
-                    let difficulty;
-                    if (!(document.getElementById("diffdrop").value == -1))
-                    {
-                        difficulty = document.getElementById("diffdrop").value;
-                    }
-                    else
-                    {
-                        difficulty = Math.floor(Math.random() * 3);
-                    }
-                    let image = Math.ceil(Math.random() * 15);
+                    imageQueue = [];
+                    const diff = parseInt(document.getElementById("diffdrop").value);
+                    const diffOptions = diff === -1 ? [0, 1, 2] 
+                                                    : [diff];
 
-                    path = "screenshots/" + bastions[bastionType] + difficulties[difficulty] + "/" + image + ".png";
+                    for (let b = 0; b < bastions.length; b++) 
+                    {
+                        for (let d of diffOptions) 
+                        {
+                            const key = bastions[b] + difficulties[d];
+                            const count = imageCounts[key];
+                            for (let i = 1; i <= count; i++) 
+                            {
+                                imageQueue.push({
+                                    path: "screenshots/" + key + "/" + i + ".png",
+                                    answer: bastions[b]
+                                });
+                            }
+                        }
+                    }
 
-                    answer = bastions[bastionType];
+                    for (let i = imageQueue.length - 1; i > 0; i--) 
+                    {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [imageQueue[i], imageQueue[j]] = [imageQueue[j], imageQueue[i]];
+                    }
+                }
+
+                function updateImage() 
+                {
+                    if (imageQueue.length === 0) 
+                    {
+                        buildQueue();
+                    }
+
+                    const next = imageQueue.pop();
+                    path = next.path;
+                    answer = next.answer;
                     document.getElementById("bastion").src = path;
                     document.getElementById("streak").innerHTML = 'Streak: ' + streak;
 
-                    if (document.getElementById("modedrop").value == 1)
+                    if (document.getElementById("modedrop").value == 1) 
                     {
                         zoom(3);
-                    }
-                    else
+                    } 
+                    else 
                     {
                         zoom(1);
                     }
@@ -161,12 +200,7 @@
 
                 function reset()
                 {
-                    previous = path;
                     updateImage();
-                    while (path == previous)
-                    {
-                        updateImage();
-                    }
                     for (let rep = 0; rep < bastions.length; rep = rep + 1)
                     {
                         document.getElementById(bastions[rep]).disabled = false;
@@ -179,7 +213,7 @@
 
                 function zoom(scale) 
                 {
-                    let img = document.getElementById("bastion")
+                    const img = document.getElementById("bastion")
                     img.style.transform = `scale(${scale})`;
                 }
             </script>
